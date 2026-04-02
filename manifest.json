@@ -1,1 +1,19 @@
-{"manifest_version":3,"name":"OpenAI Codex OAuth Helper","version":"1.0","description":"\u8fc7OAuth\u6388\u6743\u767b\u5f55OpenAI Codex\uff0c\u7ba1\u7406token\u548cProfile\u4fe1\u606f。","permissions":["storage","identity"],"host_permissions":["https://chat.openai.com/*"],"background":{"service_worker":"background.js"},"action":{"default_popup":"popup.html"},"options_page":"options.html"}
+{
+  "manifest_version": 3,
+  "name": "OpenAI Codex OAuth Helper",
+  "version": "1.1.0",
+  "description": "标准 code-exchange 骨架：浏览器插件拿 code，服务端换 token。",
+  "permissions": ["storage", "identity"],
+  "host_permissions": [
+    "https://auth.openai.com/*",
+    "http://localhost:8080/*",
+    "https://localhost:8080/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html"
+}

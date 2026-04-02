@@ -4,14 +4,20 @@
   <meta charset="utf-8">
   <title>Codex OAuth 授权</title>
   <style>
-    body { min-width:200px; font-family: sans-serif; }
-    #status { margin-top: 1em; font-size: 0.9em; color: #387ced;}
-    button { padding: 6px 16px; font-size: 1em;}
+    body { min-width: 340px; font-family: sans-serif; padding: 12px; }
+    #status { margin: 10px 0; font-size: 14px; color: #387ced; }
+    .actions { display: flex; gap: 8px; margin-bottom: 10px; }
+    button { padding: 8px 12px; font-size: 14px; cursor: pointer; }
+    pre { white-space: pre-wrap; word-break: break-word; background: #f6f8fa; padding: 10px; border-radius: 8px; font-size: 12px; max-height: 260px; overflow: auto; }
   </style>
 </head>
 <body>
-  <button id="login">OAuth 登录</button>
+  <div class="actions">
+    <button id="login">开始授权</button>
+    <button id="open-options">设置</button>
+  </div>
   <div id="status"></div>
+  <pre id="details"></pre>
   <script src="popup.js"></script>
 </body>
 </html>

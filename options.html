@@ -1,10 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Options</title>
+  <meta charset="utf-8">
+  <title>OAuth 设置</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 24px auto; padding: 0 16px; }
+    h1 { margin-bottom: 16px; }
+    .field { margin-bottom: 14px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    input { width: 100%; padding: 8px 10px; box-sizing: border-box; }
+    .row { display: flex; gap: 10px; }
+    .row > div { flex: 1; }
+    button { padding: 8px 14px; margin-right: 8px; cursor: pointer; }
+    #status { margin: 12px 0; color: #387ced; }
+    pre { white-space: pre-wrap; word-break: break-word; background: #f6f8fa; padding: 12px; border-radius: 8px; font-size: 12px; }
+    .hint { color: #666; font-size: 13px; }
+  </style>
 </head>
 <body>
-    <h1>Options</h1>
-    <script src="options.js"></script>
+  <h1>OAuth 配置</h1>
+
+  <div class="field">
+    <label for="authorizeBaseUrl">Authorize URL</label>
+    <input id="authorizeBaseUrl" placeholder="https://auth.openai.com/oauth/authorize" />
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label for="clientId">Client ID</label>
+      <input id="clientId" placeholder="填写你的 client_id" />
+    </div>
+    <div class="field">
+      <label for="callbackPath">Callback Path</label>
+      <input id="callbackPath" placeholder="openai-codex" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="scope">Scope</label>
+    <input id="scope" placeholder="openid profile email offline_access" />
+  </div>
+
+  <div class="field">
+    <label for="backendExchangeUrl">Backend Exchange URL</label>
+    <input id="backendExchangeUrl" placeholder="http://localhost:8080/api/ext/oauth/exchange" />
+    <div class="hint">插件拿到 code 后，会 POST 到这个地址。</div>
+  </div>
+
+  <div class="field">
+    <label>当前扩展 Redirect URI</label>
+    <pre id="redirectUri"></pre>
+  </div>
+
+  <div>
+    <button id="save">保存配置</button>
+    <button id="clear">清空授权结果</button>
+    <button id="reload-status">刷新状态</button>
+  </div>
+
+  <div id="status"></div>
+
+  <h2>当前存储状态</h2>
+  <pre id="stored"></pre>
+
+  <script src="options.js"></script>
 </body>
 </html>
