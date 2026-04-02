@@ -1,11 +1,11 @@
 const OAUTH_URL = "https://chat.openai.com/oauth/authorize";
-const CLIENT_ID = "YOUR_CLIENT_ID"; // 请替换为你自己申请的 OpenAI OAuth client_id
+const CLIENT_ID = "YOUR_CLIENT_ID";
 const RESPONSE_TYPE = "token";
 const SCOPES = "openid email profile";
-const REDIRECT_URI = chrome.identity.getRedirectURL("openai-codex");
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === "START_OAUTH") {
+    const REDIRECT_URI = chrome.identity.getRedirectURL("openai-codex");
     chrome.identity.launchWebAuthFlow({
       url: `${OAUTH_URL}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPES)}`,
       interactive: true
