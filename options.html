@@ -21,19 +21,9 @@
   <h1>OAuth 配置</h1>
 
   <div class="field">
-    <label for="authorizeBaseUrl">Authorize URL</label>
-    <input id="authorizeBaseUrl" placeholder="https://auth.openai.com/oauth/authorize" />
-  </div>
-
-  <div class="row">
-    <div class="field">
-      <label for="clientId">Client ID</label>
-      <input id="clientId" placeholder="填写你的 client_id" />
-    </div>
-    <div class="field">
-      <label for="callbackPath">Callback Path</label>
-      <input id="callbackPath" placeholder="openai-codex" />
-    </div>
+    <label for="backendBaseUrl">Backend Base URL</label>
+    <input id="backendBaseUrl" placeholder="http://localhost:8080/api/ext/oauth" />
+    <div class="hint">后端负责生成授权 URL，并完成 code -> token 的交换。</div>
   </div>
 
   <div class="field">
@@ -42,14 +32,14 @@
   </div>
 
   <div class="field">
-    <label for="backendExchangeUrl">Backend Exchange URL</label>
-    <input id="backendExchangeUrl" placeholder="http://localhost:8080/api/ext/oauth/exchange" />
-    <div class="hint">插件拿到 code 后，会 POST 到这个地址。</div>
+    <label>后端本地回调</label>
+    <pre id="callbackUrl"></pre>
+    <div class="hint">OpenAI 登录完成后会跳回这个本地地址，由 Node 后端接收 code 并自动完成 token 交换。</div>
   </div>
 
   <div class="field">
-    <label>当前扩展 Redirect URI</label>
-    <pre id="redirectUri"></pre>
+    <label>后端请求地址</label>
+    <pre id="backendUrls"></pre>
   </div>
 
   <div>

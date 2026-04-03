@@ -1,18 +1,21 @@
-const ids = [
-  "authorizeBaseUrl",
-  "clientId",
-  "scope",
-  "backendExchangeUrl",
-  "callbackPath",
-];
+const ids = ["backendBaseUrl", "scope"];
 
 const statusEl = document.getElementById("status");
 const storedEl = document.getElementById("stored");
-const redirectUriEl = document.getElementById("redirectUri");
+const callbackUrlEl = document.getElementById("callbackUrl");
+const backendUrlsEl = document.getElementById("backendUrls");
+
+const DEFAULT_BACKEND_BASE_URL = "http://localhost:8080/api/ext/oauth";
+const DEFAULT_CALLBACK_URL = "http://localhost:1455/auth/callback";
 
 function setStatus(text, isError = false) {
   statusEl.textContent = text;
   statusEl.style.color = isError ? "#c62828" : "#387ced";
+}
+
+function joinUrl(baseUrl, suffix) {
+  const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+  return new URL(suffix.replace(/^\/+/, ""), normalizedBase).toString();
 }
 
 function getFormConfig() {
@@ -27,8 +30,18 @@ function fillForm(config = {}) {
   for (const id of ids) {
     document.getElementById(id).value = config[id] || "";
   }
-  const callbackPath = config.callbackPath || "openai-codex";
-  redirectUriEl.textContent = chrome.identity.getRedirectURL(callbackPath);
+
+  const backendBaseUrl = config.backendBaseUrl || DEFAULT_BACKEND_BASE_URL;
+  callbackUrlEl.textContent = DEFAULT_CALLBACK_URL;
+  backendUrlsEl.textContent = JSON.stringify(
+    {
+      start: joinUrl(backendBaseUrl, "start"),
+      status: joinUrl(backendBaseUrl, "status"),
+      me: joinUrl(backendBaseUrl, "me"),
+    },
+    null,
+    2,
+  );
 }
 
 async function sendMessage(message) {
@@ -75,8 +88,18 @@ document.getElementById("reload-status").onclick = refresh;
 
 for (const id of ids) {
   document.getElementById(id).addEventListener("input", () => {
-    const callbackPath = document.getElementById("callbackPath").value.trim() || "openai-codex";
-    redirectUriEl.textContent = chrome.identity.getRedirectURL(callbackPath);
+    const backendBaseUrl =
+      document.getElementById("backendBaseUrl").value.trim() || DEFAULT_BACKEND_BASE_URL;
+    callbackUrlEl.textContent = DEFAULT_CALLBACK_URL;
+    backendUrlsEl.textContent = JSON.stringify(
+      {
+        start: joinUrl(backendBaseUrl, "start"),
+        status: joinUrl(backendBaseUrl, "status"),
+        me: joinUrl(backendBaseUrl, "me"),
+      },
+      null,
+      2,
+    );
   });
 }
 
